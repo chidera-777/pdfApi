@@ -35,7 +35,7 @@ class CustomUserAdmin(UserAdmin):
         }),
         (('Personal_info'), {
           'classes': ['wide'],
-          'fields': ('first_name', 'last_name')
+          'fields': ('first_name', 'image')
         }),
         (('Permissions'), {
           'classes': ['wide'],
@@ -45,10 +45,10 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
           'classes': ('wide',),
-          'fields': ('email', 'first_name', 'last_name', 'password1', 'password2')}
+          'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'image')}
         ),
     )  
-    list_display = ['email', 'first_name', 'is_staff']
+    list_display = ['id', 'email', 'first_name', 'is_staff', 'created']
     list_filter = ['email', 'is_staff', 'is_active']
     search_fields = ['email']
     ordering = ('email',)  

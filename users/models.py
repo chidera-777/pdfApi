@@ -9,6 +9,8 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    image = models.ImageField(blank=True, upload_to='profile_pic', default='default.jpg')
+    created = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [
