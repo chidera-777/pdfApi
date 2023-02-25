@@ -41,16 +41,17 @@ update_view = UpdateAPIResponseView.as_view()
 
 
 class ChangePasswordAPIView(generics.UpdateAPIView):
-    queryset = User.objects.all()
     serializer_class = ChangePasswordSerializer
-    lookup_field = 'pk'
     
-    def update(self, request):
+    def get_object(self):
+        return self.request.user
+    
+    def update(self, request, *args, **kwargs):
         user = self.get_object()
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            old_password = serializer.data.get('old_password')
-            password = serializer.data.get('password')        
+            old_password = serializer.validated_data['old_password']
+            password = serializer.validated_data['password']                
             if not user.check_password(old_password):
                 return Response({
                     "old_password": "Old password is not correct!!"

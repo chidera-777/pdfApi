@@ -45,27 +45,15 @@ class UpdateSerializer(serializers.ModelSerializer):
     
    
     
-class ChangePasswordSerializer(serializers.ModelSerializer):
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(style={'input_type':'password'}, write_only=True)
     password = serializers.CharField(style={'input_type':'password'}, write_only=True, validators=[validate_password])
     password2 = serializers.CharField(style={'input_type':'password'}, write_only=True)
-    old_password = serializers.CharField(style={'input_type':'password'}, write_only=True)
-    
-    class Meta:
-        model = User
-        fields = ['old_password', 'password', 'password2']
         
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"password": "Passwords don\'t match"})
         return attrs
-    
-    # def update(self, instance, validated_data):
-    #     user = self.context['request'].user
-    #     if user.pk != instance.pk:
-    #         raise serializers.ValidationError({"authorize": "You are not authorize to access this data"})
-    #     instance.set_password(validated_data['password'])
-    #     instance.save()
-    #     return instance
     
     
 class LoginSerializer(serializers.Serializer):
