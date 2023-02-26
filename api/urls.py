@@ -9,5 +9,7 @@ urlpatterns = [
     path('logout/', knox_views.LogoutView.as_view(), name="logout"),
     path('logoutall/', knox_views.LogoutAllView.as_view(), name="logoutall"),
     path('update/password/', views.update_password, name='updatePassword'),
+    path('password-reset/', views.reset_password, name="resetPassword"),
+    path('password-reset-confirm/<uidb64>/<token>/', views.reset_password_confirm, name="resetPasswordConfirm"),
     path('pdf/', views.pdf_list, name='pdf'),
  ]

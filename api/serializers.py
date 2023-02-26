@@ -78,6 +78,20 @@ class LoginSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
     
+
+class ResetPasswordEmailSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    
+    
+class ResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(style={'input_type':'password'}, write_only=True, validators=[validate_password])
+    password2 = serializers.CharField(style={'input_type':'password'}, write_only=True)
+        
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Passwords don\'t match"})
+        return attrs
+
 class PDFSerializer(serializers.ModelSerializer):
     category_data = serializers.SerializerMethodField(read_only=True)
     class Meta:
